@@ -1,0 +1,3 @@
+[submodule "pages/work"]
+	path = pages/work
+	url = git@github.com:daniensi/site-private.git
