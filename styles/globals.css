@@ -2,6 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Prism.js syntax highlighting styles - Light theme */
+@import 'prismjs/themes/prism.css';
+
+/* Custom code block styling */
+.rehype-code-title {
+  @apply bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200;
+  @apply px-4 py-2 text-sm font-medium;
+  @apply rounded-t-lg border-b border-gray-300 dark:border-gray-600;
+  @apply font-mono;
+}
+
+.code-block-wrapper {
+  @apply relative;
+  @apply w-full;
+}
+
+.code-block-wrapper pre {
+  @apply bg-white dark:bg-gray-900;
+  @apply border border-gray-200 dark:border-gray-700;
+  @apply rounded-lg;
+  @apply p-4;
+  @apply overflow-x-auto;
+  @apply text-sm;
+  @apply font-mono;
+  @apply relative;
+  @apply w-full;
+  @apply max-w-none;
+}
+
+.code-block-wrapper pre:has(+ .rehype-code-title) {
+  @apply rounded-t-none;
+  @apply border-t-0;
+}
+
+.copy-button {
+  @apply opacity-0 group-hover:opacity-100;
+  @apply transition-opacity duration-200;
+}
+
 html,
 body {
   @apply bg-gray-50 dark:bg-neutral-950;
@@ -359,13 +398,13 @@ blockquote span::after {
     @apply prose-a:[font-variation-settings:'opsz'_15,_'wght'_450];
     @apply prose-p:first:mt-0;
     @apply prose-p:leading-relaxed sm:prose-p:leading-golden;
-    @apply prose prose-neutral dark:prose-invert;
+    @apply prose prose-neutral dark:prose-invert max-w-4xl;
     @apply prose-p:text-neutral-800 dark:prose-p:text-silver;
     @apply prose-headings:font-normal prose-headings:[font-variation-settings:'wght'_500];
     @apply prose-strong:font-normal prose-strong:[font-variation-settings:'wght'_500];
-    @apply prose-em:not-italic prose-em:underline prose-em:decoration-neutral-300 prose-em:decoration-wavy dark:prose-em:decoration-neutral-700;
-    @apply prose-code:rounded prose-code:font-normal prose-code:text-neutral-800 dark:prose-code:text-silver-dark;
-    @apply prose-pre:overflow-auto prose-pre:whitespace-pre prose-pre:border prose-pre:border-neutral-200 prose-pre:bg-transparent prose-pre:p-4 prose-pre:text-sm dark:prose-pre:border-neutral-900 sm:prose-pre:-ml-4 sm:prose-pre:-mr-4;
+    @apply prose-em:italic;
+    @apply prose-code:rounded-lg prose-code:bg-gray-100 dark:prose-code:bg-neutral-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:font-mono prose-code:text-sm prose-code:text-neutral-800 dark:prose-code:text-silver prose-code:before:content-none prose-code:after:content-none;
+    @apply prose-pre:overflow-auto prose-pre:whitespace-pre prose-pre:border prose-pre:border-neutral-200 prose-pre:bg-transparent prose-pre:p-4 prose-pre:text-sm dark:prose-pre:border-neutral-900;
     @apply prose-img:rounded-lg;
     @apply prose-hr:my-6 prose-hr:h-[2px] prose-hr:border-none prose-hr:bg-neutral-200 dark:prose-hr:bg-neutral-900 sm:prose-hr:my-10;
     @apply prose-blockquote:border-0 prose-blockquote:p-0 prose-blockquote:not-italic prose-blockquote:text-neutral-600 dark:prose-blockquote:text-silver-dark;

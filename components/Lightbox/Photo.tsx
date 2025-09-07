@@ -8,8 +8,8 @@ import {
   SpinnerIcon,
   SunIcon,
   TagIcon,
-} from "../Icons";
-import { ExifSummaryExposure } from "../ExifSummary";
+} from "../Icons/Icons";
+import { ExifSummaryExposure } from "../ExifSummary/ExifSummary";
 import formatDate from "../../lib/formatDate";
 
 

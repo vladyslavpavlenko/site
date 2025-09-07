@@ -1,7 +1,7 @@
 import { MDXRemote } from "next-mdx-remote";
 import Link from "next/link";
 import Image from "next/image";
-import { mdxComponents } from "../Prose";
+import { mdxComponents } from "../Prose/Prose";
 import { serialize } from "next-mdx-remote/serialize";
 import { useEffect, useState } from "react";
 import { intro } from "../../constants";

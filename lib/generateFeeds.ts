@@ -1,6 +1,6 @@
 
 import { Feed as RSSFeed } from "feed";
-import { baseUrl } from "../components/SEO";
+import { baseUrl } from "../components/SEO/SEO";
 
 export default function (posts, siteSettings) {
   const date = new Date();

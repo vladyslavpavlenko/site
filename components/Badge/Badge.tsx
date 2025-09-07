@@ -1,4 +1,4 @@
-import { LockIcon } from "../Icons";
+import { LockIcon } from "../Icons/Icons";
 
 interface BadgeProps {
   isLive?: boolean;

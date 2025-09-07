@@ -57,10 +57,10 @@ module.exports = {
         spring: "cubic-bezier(0.68, -0.55, 0.265, 1.55)",
       },
       maxWidth: {
-        main: "46rem",
+        main: "42rem",
       },
       width: {
-        main: "46rem",
+        main: "42rem",
       },
       animation: {
         "spin-slow": "spin 10s linear infinite",

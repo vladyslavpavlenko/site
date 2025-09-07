@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useState } from "react";
-import { ExternalIcon } from "../Icons";
-import { Tooltip } from "../Tooltip";
+import { ExternalIcon } from "../Icons/Icons";
+import { Tooltip } from "../Tooltip/Tooltip";
 import { IoShareSocialSharp as ShareIcon} from "react-icons/io5"
 import useCopy from "@react-hook/copy";
 

@@ -4,17 +4,16 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { MDXRemote } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
-import { Main } from "../../components/Layouts";
-import { baseUrl, SEO } from "../../components/SEO";
-import Badge from "../../components/Badge";
-import { LinkShare } from "../../components/Links";
-import { mdxComponents } from "../../components/Prose";
+import rehypePrism from "@mapbox/rehype-prism";
+import rehypeCodeTitles from "rehype-code-titles";
+import { Main } from "../../components/Layouts/Layouts";
+import { baseUrl, SEO } from "../../components/SEO/SEO";
+import Badge from "../../components/Badge/Badge";
+import { LinkShare } from "../../components/Links/Links";
+import { mdxComponents } from "../../components/Prose/Prose";
 import formatDate from "../../lib/formatDate";
 import contentfulLoader from "../../lib/contentfulLoader";
 import { posts, siteSettings } from "../../constants";
-
-
-
 
 export default function Post(props) {
   const router = useRouter();
@@ -70,13 +69,14 @@ export default function Post(props) {
               >
                 <div className="relative w-5 h-5">
                   <Image
-                  alt={props.siteSettings.siteTitle}
-                  title={props.siteSettings.siteTitle}
+                  alt={props.siteSettings?.siteTitle || "Site avatar"}
+                  title={props.siteSettings?.siteTitle || "Site avatar"}
                   className="rounded-full bg-gray-200 dark:bg-neutral-600 object-cover"
-                  src={props.siteSettings.avatarUrl}
+                  src={props.siteSettings?.avatarUrl || "/favicon.svg"}
                   fill
                   />
                 </div>
+                <span className="text-neutral-800 dark:text-silver">Vladyslav Pavlenko</span>
               </Link>
               <time dateTime={publishedDate}>
                 <Badge>{formatDate(publishedDate)}</Badge>
@@ -88,7 +88,7 @@ export default function Post(props) {
           </div>
         </header>
 
-        <div className="rounded-lg p-0 sm:bg-gray-100 sm:p-20 sm:dark:bg-white/[.06]">
+        <div className="rounded-lg p-0 pt-2">
           {coverUrl ? (
             <Image
               height={400}
@@ -126,11 +126,19 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   const post = posts.find(p => p.slug === params.slug);
+  
+  if (!post) {
+    return {
+      notFound: true,
+    };
+  }
+
   const remarkTypograf = require("@mavrin/remark-typograf");
 
   const body = await serialize(post.body, {
     mdxOptions: {
       remarkPlugins: [[remarkTypograf, { locale: ["en-US"] }]],
+      rehypePlugins: [rehypeCodeTitles, rehypePrism],
     },
   });
 

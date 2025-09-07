@@ -1,7 +1,7 @@
 "use client";
 
 import { DialogContent, DialogOverlay } from "@reach/dialog";
-import { CloseIcon } from "../Icons";
+import { CloseIcon } from "../Icons/Icons";
 
 interface LightboxProps {
   children: JSX.Element | string;

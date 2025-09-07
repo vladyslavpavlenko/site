@@ -1,4 +1,4 @@
-import Footer from "../Footer";
+import Footer from "../Footer/Footer";
 
 export function Main({ children }) {
   return (

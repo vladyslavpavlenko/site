@@ -2,23 +2,23 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { Command } from "cmdk";
 import { useState, useEffect } from "react";
-import { FaLinkedin as LinkedInIcon } from 'react-icons/fa';
+import { FaLinkedin as LinkedInIcon, FaGithub as GitHubIcon } from 'react-icons/fa';
 import { MdEmail as EmailIcon } from 'react-icons/md'
 import {
   HomeIcon,
   NavigationIcon,
   NoteIcon,
   SpinnerIcon,
-} from "../Icons";
+} from "../Icons/Icons";
 import { CSSTransitionGroup } from "react-transition-group";
-import { Tooltip } from "../Tooltip";
+import { Tooltip } from "../Tooltip/Tooltip";
 
 enum TooltipState {
   HOME,
   MENU,
 }
 
-export default function Archipelago() {
+export default function Navigation() {
   const router = useRouter();
   const currentRoute = router.pathname;
   const isHome = currentRoute === "/";
@@ -92,15 +92,19 @@ export default function Archipelago() {
           </Command.Group>
 
           <Command.Group heading="Contact">
-          <Command.Item onSelect={() => navigate("//linkedin.com/in/vladyslavpavlenko")}>
+            <Command.Item onSelect={() => navigate("//linkedin.com/in/vladyslavpavlenko")}>
               <div>
                 <LinkedInIcon size={16} />
                 LinkedIn
               </div>
             </Command.Item>
-            <Command.Item
-              onSelect={() => navigate("mailto:xyz.pavlenko@gmail.com")}
-            >
+            <Command.Item onSelect={() => navigate("//github.com/vladyslavpavlenko")}>
+              <div>
+                <GitHubIcon size={16} />
+                GitHub
+              </div>
+            </Command.Item>
+            <Command.Item onSelect={() => navigate("mailto:xyz.pavlenko@gmail.com")}>
               <div>
                 <EmailIcon size={17} />
                 Email

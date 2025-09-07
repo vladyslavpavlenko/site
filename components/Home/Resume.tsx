@@ -1,5 +1,5 @@
-import Badge from "../Badge";
-import { LinkExternal } from "../Links";
+import Badge from "../Badge/Badge";
+import { LinkExternal } from "../Links/Links";
 
 export default function Resume() {
   return (

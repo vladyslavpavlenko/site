@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { PlusIcon } from "../Icons";
+import { PlusIcon } from "../Icons/Icons";
 
 interface RichButtonProps {
   imageSrc?: string;

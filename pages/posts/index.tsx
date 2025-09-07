@@ -1,8 +1,7 @@
-import type { GetStaticProps } from "next";
 import Link from "next/link";
 import React from "react";
-import { Main } from "../../components/Layouts";
-import { SEO } from "../../components/SEO";
+import { Main } from "../../components/Layouts/Layouts";
+import { SEO } from "../../components/SEO/SEO";
 import formatDate from "../../lib/formatDate";
 import { posts } from "../../constants";
 

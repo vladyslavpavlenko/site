@@ -1,6 +1,6 @@
 import Link from "next/link";
 import formatDate from "../../lib/formatDate";
-import { FeedIcon, NoteIcon } from "../Icons";
+import { FeedIcon, NoteIcon } from "../Icons/Icons";
 
 export default function Posts({ posts }) {
   return (

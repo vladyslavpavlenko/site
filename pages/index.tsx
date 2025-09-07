@@ -1,10 +1,9 @@
 import Intro from "../components/Home/Intro";
 import Resume from "../components/Home/Resume";
-import { Main } from "../components/Layouts";
-import { SEO } from "../components/SEO";
+import { Main } from "../components/Layouts/Layouts";
+import { SEO } from "../components/SEO/SEO";
 import Library from "../components/Home/Library";
 import Posts from "../components/Home/Posts";
-import SummaryCard from "../components/SummaryCard";
 import { posts } from "../constants";
 import { siteSettings } from "../constants";
 

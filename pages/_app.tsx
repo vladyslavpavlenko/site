@@ -9,8 +9,8 @@ const sansFont = localFont({
   display: "swap",
 });
 
-const Archipelago = dynamic(
-  () => import("../components/Navigation/Archipelago")
+const Navigation = dynamic(
+  () => import("../components/Navigation/./Navigation")
 );
 
 
@@ -32,7 +32,7 @@ export default function MyApp({
         <Component {...pageProps} />
 
         <Suspense>
-          <Archipelago />
+          <Navigation />
         </Suspense>
     </>
   );

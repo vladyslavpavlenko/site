@@ -1,6 +1,6 @@
 // components/Home/Library.tsx
 
-import MediaCard, { MediaCardImageRadius } from "../MediaCard";
+import MediaCard, { MediaCardImageRadius } from "../MediaCard/MediaCard";
 
 export default function Library() {
   const books = [
