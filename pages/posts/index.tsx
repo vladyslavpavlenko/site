@@ -3,11 +3,9 @@ import React from "react";
 import { Main } from "../../components/Layouts/Layouts";
 import { SEO } from "../../components/SEO/SEO";
 import formatDate from "../../lib/formatDate";
-import { posts } from "../../constants";
+import { getPostMetadata } from "../../lib/markdownLoader";
 
-export default function Posts({  }) {
-
-
+export default function Posts({ posts = [] }) {
   return (
     <>
       <SEO
@@ -18,7 +16,7 @@ export default function Posts({  }) {
       />
       <Main>
         <dl className="list-container items-center gap-2">
-          {posts.map(({ slug, title, publishedDate }) => (
+          {(posts || []).map(({ slug, title, publishedDate }) => (
             <React.Fragment key={slug}>
               <dt className="list-title border-none pt-0">
                 <time className="time time-lg" dateTime={publishedDate}>
@@ -38,4 +36,24 @@ export default function Posts({  }) {
       </Main>
     </>
   );
+}
+
+export async function getStaticProps() {
+  try {
+    const posts = getPostMetadata(); // Only published posts by default
+
+    return {
+      props: {
+        posts: posts || [],
+      },
+    };
+  } catch (error) {
+    console.error('Error loading posts in getStaticProps:', error);
+    
+    return {
+      props: {
+        posts: [],
+      },
+    };
+  }
 }

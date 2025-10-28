@@ -13,13 +13,14 @@ import { LinkShare } from "../../components/Links/Links";
 import { mdxComponents } from "../../components/Prose/Prose";
 import formatDate from "../../lib/formatDate";
 import contentfulLoader from "../../lib/contentfulLoader";
-import { posts, siteSettings } from "../../constants";
+import { getPostBySlug, getPostSlugs } from "../../lib/markdownLoader";
+import { siteSettings } from "../../constants";
 
 export default function Post(props) {
   const router = useRouter();
   const slug = router.query.slug as string;
 
-  const post = posts.find(p => p.slug === slug);
+  const post = props.post;
 
   if (!post) {
     return (
@@ -58,11 +59,20 @@ export default function Post(props) {
       />
       <Main>
         <header className="mb-6 rounded-lg sm:mb-6">
-          <h1 className="pb-2 text-2xl text-neutral-800 [font-variation-settings:'opsz'_32,_'wght'_500] dark:text-white sm:pb-3 sm:text-3xl">
+          {post.draft && (
+            <div className="mb-4 rounded-lg bg-yellow-100 dark:bg-yellow-900/20 border border-yellow-300 dark:border-yellow-700 p-3">
+              <div className="flex items-center">
+                <span className="text-yellow-800 dark:text-yellow-200 text-sm font-medium">
+                  📝 Draft Post - This post is not published and only visible in development mode
+                </span>
+              </div>
+            </div>
+          )}
+          <h1 className="pb-2 text-2xl text-neutral-800 [font-variation-settings:'opsz'_32,_'wght'_600] dark:text-white sm:pb-3 sm:text-3xl font-bold">
             <Link href={relativeUrl}>{title}</Link>
           </h1>
           <div className="flex w-full flex-row justify-between">
-            <div className="flex flex-row items-center gap-2">
+            <div className="flex flex-col gap-2">
               <Link
                 href="/"
                 className="flex flex-row items-center gap-2 [font-variation-settings:'wght'_450]"
@@ -78,8 +88,8 @@ export default function Post(props) {
                 </div>
                 <span className="text-neutral-800 dark:text-silver">Vladyslav Pavlenko</span>
               </Link>
-              <time dateTime={publishedDate}>
-                <Badge>{formatDate(publishedDate)}</Badge>
+              <time dateTime={publishedDate} className="ml-0 text-sm text-neutral-500 dark:text-silver-dark">
+                {formatDate(publishedDate)}
               </time>
             </div>
             <LinkShare title={title} url={url}>
@@ -114,8 +124,9 @@ export default function Post(props) {
 }
 
 export async function getStaticPaths() {
-  const paths = posts.map((post) => ({
-    params: { slug: post.slug },
+  const slugs = getPostSlugs();
+  const paths = slugs.map((slug) => ({
+    params: { slug },
   }));
 
   return {
@@ -125,9 +136,16 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const post = posts.find(p => p.slug === params.slug);
+  const post = getPostBySlug(params.slug);
   
   if (!post) {
+    return {
+      notFound: true,
+    };
+  }
+
+  // In production, hide draft posts unless in development mode
+  if (post.draft && process.env.NODE_ENV === 'production') {
     return {
       notFound: true,
     };

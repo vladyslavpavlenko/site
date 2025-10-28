@@ -1,25 +1,40 @@
 import { FC } from "react";
 import generateFeeds from "../../lib/generateFeeds";
-import { posts, siteSettings } from "../../constants";
+import { siteSettings } from "../../constants";
+import { getPostMetadata } from "../../lib/markdownLoader";
 
 const Atom: FC = () => null;
 
 export async function getServerSideProps({ res }) {
-  const { atom } = generateFeeds(posts, siteSettings);
+  try {
+    const posts = getPostMetadata() || []; // Only published posts by default
+    const { atom } = generateFeeds(posts, siteSettings);
 
-  if (res) {
-    res.setHeader("Content-Type", "text/xml");
-    res.setHeader(
-      "Cache-Control",
-      "s-maxage=86400, stale-while-revalidate=604800"
-    );
-    res.write(atom);
-    res.end();
+    if (res) {
+      res.setHeader("Content-Type", "text/xml");
+      res.setHeader(
+        "Cache-Control",
+        "s-maxage=86400, stale-while-revalidate=604800"
+      );
+      res.write(atom);
+      res.end();
+    }
+
+    return {
+      props: {},
+    };
+  } catch (error) {
+    console.error('Error generating atom feed:', error);
+    
+    if (res) {
+      res.statusCode = 500;
+      res.end('Internal Server Error');
+    }
+
+    return {
+      props: {},
+    };
   }
-
-  return {
-    props: {},
-  };
 }
 
 export default Atom;
