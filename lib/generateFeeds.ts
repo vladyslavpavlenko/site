@@ -4,7 +4,9 @@ import { baseUrl } from "../components/SEO/SEO";
 
 export default function (posts, siteSettings) {
   const date = new Date();
-  const updated = new Date(posts[0].publishedDate);
+  const updated = posts.length > 0 && posts[0]?.publishedDate 
+    ? new Date(posts[0].publishedDate)
+    : date;
   const author = {
     name: siteSettings.siteTitle,
     email: "xyz.pavlenko@gmail.com",
@@ -13,7 +15,7 @@ export default function (posts, siteSettings) {
 
   const feed = new RSSFeed({
     title: siteSettings.siteTitle,
-    description: siteSettings.metaDescription,
+    description: siteSettings.metaDescription || siteSettings.siteDescription || '',
     id: baseUrl,
     link: baseUrl,
     language: "en",
@@ -28,18 +30,22 @@ export default function (posts, siteSettings) {
     author,
   });
 
-  posts.forEach((post) => {
-    const url = `${baseUrl}/posts/${post.slug}`;
-    feed.addItem({
-      title: post.title,
-      id: url,
-      link: url,
-      description: post.metaDescription,
-      author: [author],
-      contributor: [author],
-      date: new Date(post.publishedDate),
+  if (Array.isArray(posts) && posts.length > 0) {
+    posts.forEach((post) => {
+      if (post && post.slug && post.title && post.publishedDate) {
+        const url = `${baseUrl}/posts/${post.slug}`;
+        feed.addItem({
+          title: post.title,
+          id: url,
+          link: url,
+          description: post.metaDescription || '',
+          author: [author],
+          contributor: [author],
+          date: new Date(post.publishedDate),
+        });
+      }
     });
-  });
+  }
 
   const rss = feed.rss2();
   const atom = feed.atom1();
