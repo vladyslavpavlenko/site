@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { intro } from "../../constants";
 
 export default function Intro() {
-    
+    const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
     const [serialized, setSerialized] = useState(null);
 
     useEffect(() => {
@@ -30,7 +30,7 @@ export default function Intro() {
             <dt className="list-title border-none pb-4 pt-0 leading-relaxed sm:pb-0">
                 <div className="mb-4">
                     <Image
-                        src="/pic.png"
+                        src={`${basePath}/pic.png`}
                         alt="Vladyslav Pavlenko"
                         width={60}
                         height={60}

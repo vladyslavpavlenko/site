@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -19,7 +19,8 @@ import { siteSettings } from "../../constants";
 export default function Post(props) {
   const router = useRouter();
   const slug = router.query.slug as string;
-  const [avatarError, setAvatarError] = useState(false);
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+  const avatarPath = `${basePath}/pic.png`;
 
   const post = props.post;
 
@@ -79,25 +80,14 @@ export default function Post(props) {
                 className="flex flex-row items-center gap-2 [font-variation-settings:'wght'_450]"
               >
                 <div className="relative w-5 h-5">
-                  {avatarError || !props.siteSettings?.avatarUrl ? (
-                    <Image
-                      alt={props.siteSettings?.siteTitle || "Site avatar"}
-                      title={props.siteSettings?.siteTitle || "Site avatar"}
-                      className="rounded-full bg-gray-200 dark:bg-neutral-600 object-cover"
-                      src="/pic.png"
-                      fill
-                      unoptimized
-                    />
-                  ) : (
-                    <img
-                      alt={props.siteSettings?.siteTitle || "Site avatar"}
-                      title={props.siteSettings?.siteTitle || "Site avatar"}
-                      className="rounded-full bg-gray-200 dark:bg-neutral-600 object-cover w-full h-full"
-                      src={props.siteSettings.avatarUrl}
-                      onError={() => setAvatarError(true)}
-                      loading="lazy"
-                    />
-                  )}
+                  <Image
+                    alt={props.siteSettings?.siteTitle || "Site avatar"}
+                    title={props.siteSettings?.siteTitle || "Site avatar"}
+                    className="rounded-full bg-gray-200 dark:bg-neutral-600 object-cover"
+                    src={avatarPath}
+                    fill
+                    unoptimized
+                  />
                 </div>
                 <span className="text-neutral-800 dark:text-silver">Vladyslav Pavlenko</span>
               </Link>
