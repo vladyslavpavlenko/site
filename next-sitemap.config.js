@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: "https://me.x70.one",
+  siteUrl: process.env.NEXT_PUBLIC_BASE_URL || "https://vladyslavpavlenko.github.io/site",
   generateRobotsTxt: true,
   robotsTxtOptions: {
     policies: [

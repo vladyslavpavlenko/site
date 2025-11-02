@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { DefaultSeo } from "next-seo";
 
-export const baseUrl = "https://me.x70.one";
+export const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://vladyslavpavlenko.github.io/site";
 
 export const defaultSEO = {
   title: "Vladyslav Pavlenko",
@@ -66,13 +66,12 @@ export function SEO({ seo }: { seo?: SEOProps }) {
                 "@type": "Person",
                 name: defaultSEO.title,
                 url: baseUrl,
-                jobTitle: "Product Designer",
-                alumniOf: "University of Applied Sciences Potsdam",
+                jobTitle: "Go Engineer",
+                alumniOf: "Kyiv National University",
                 gender: "male",
                 image: defaultSEO.openGraph.images[0].url,
                 sameAs: [
-                  "https://twitter.com/daniensi",
-                  "https://www.linkedin.com/in/daniensi/",
+                  "https://www.linkedin.com/in/vladyslavpavlenko",
                 ],
               },
             }),

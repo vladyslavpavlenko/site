@@ -7,7 +7,7 @@ export default function (posts, siteSettings) {
   const updated = new Date(posts[0].publishedDate);
   const author = {
     name: siteSettings.siteTitle,
-    email: "dan@x70.one",
+    email: "xyz.pavlenko@gmail.com",
     link: baseUrl,
   };
 

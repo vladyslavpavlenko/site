@@ -1,8 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export',
   reactStrictMode: true,
   swcMinify: true,
+  basePath: process.env.NEXT_PUBLIC_BASE_PATH || '',
+  assetPrefix: process.env.NEXT_PUBLIC_ASSET_PREFIX || '',
   images: {
+    unoptimized: true,
     formats: ["image/avif", "image/webp"],
     domains: ["images.ctfassets.net", "i.scdn.co", "media.licdn.com", "images-us.bookshop.org"],
     remotePatterns: [
@@ -38,6 +42,10 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "images-us.bookshop.org",
+      },
+      {
+        protocol: "https",
+        hostname: "media.licdn.com",
       }
     ],
   },
@@ -46,15 +54,6 @@ const nextConfig = {
     config.plugins.push(new webpack.ContextReplacementPlugin(/remark-textr/));
 
     return config;
-  },
-  async redirects() {
-    return [
-      {
-        source: "/projects/:path*",
-        destination: "https://daniensi.github.io/projects/:path*",
-        permanent: false,
-      },
-    ];
   },
 };
 
