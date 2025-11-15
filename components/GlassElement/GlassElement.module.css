@@ -1,0 +1,9 @@
+/* 
+Apple's Liquid Glass seems to add a certain level of reflection in addition to refraction.
+The following code is only an approximation of the appearance of the edge and opacity of an element.
+Background and box-shadow are handled dynamically in the component for dark mode support.
+*/
+.box {
+  cursor: pointer;
+}
+
