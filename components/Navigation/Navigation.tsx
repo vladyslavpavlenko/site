@@ -2,16 +2,20 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { Command } from "cmdk";
 import { useState, useEffect } from "react";
-import { FaLinkedin as LinkedInIcon, FaGithub as GitHubIcon } from 'react-icons/fa';
-import { MdEmail as EmailIcon } from 'react-icons/md'
+import { FaLinkedin as LinkedInIcon, FaGithub as GitHubIcon, FaBook } from 'react-icons/fa';
+import { FaMoon } from "react-icons/fa6";
+import { MdAlternateEmail } from 'react-icons/md'
+import { RiQuillPenAiFill } from "react-icons/ri";
+import { IoIosSunny } from "react-icons/io";
 import {
   HomeIcon,
   NavigationIcon,
-  NoteIcon,
   SpinnerIcon,
 } from "../Icons/Icons";
+import { useDarkMode } from "../../lib/useDarkMode";
 import { CSSTransitionGroup } from "react-transition-group";
 import { Tooltip } from "../Tooltip/Tooltip";
+import { GlassElement } from "../GlassElement/GlassElement";
 
 enum TooltipState {
   HOME,
@@ -25,6 +29,7 @@ export default function Navigation() {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [tooltip, setTooltip] = useState<TooltipState>(undefined);
+  const { isDark, toggleDarkMode } = useDarkMode();
 
   const navigate = async (href) => {
     if (!href) return;
@@ -47,6 +52,7 @@ export default function Navigation() {
   useEffect(() => {
     // Prefetch menu
     router.prefetch("/posts");
+    router.prefetch("/library");
 
     // Toggle the menu when ⌘K is pressed
     const down = (e) => {
@@ -59,6 +65,9 @@ export default function Navigation() {
     document.addEventListener("keydown", down);
     return () => document.removeEventListener("keydown", down);
   }, [router]);
+
+  // Removed displacement filter effect for better performance
+  // The menu now uses only CSS backdrop-blur which is much more performant
 
   return (
     <>
@@ -78,15 +87,21 @@ export default function Navigation() {
 
           <Command.Group heading="Pages">
             <Command.Item onSelect={() => navigate("/")}>
-              <div>
+              <div className="flex items-center gap-2">
                 <HomeIcon size={16} />
                 Home
               </div>
             </Command.Item>
             <Command.Item onSelect={() => navigate("/posts")}>
-              <div>
-                <NoteIcon size={16} />
+              <div className="flex items-center gap-2">
+                <RiQuillPenAiFill size={16} />
                 Posts
+              </div>
+            </Command.Item>
+            <Command.Item onSelect={() => navigate("/library")}>
+              <div className="flex items-center gap-2">
+                <FaBook size={16} />
+                Library
               </div>
             </Command.Item>
           </Command.Group>
@@ -106,8 +121,22 @@ export default function Navigation() {
             </Command.Item>
             <Command.Item onSelect={() => navigate("mailto:xyz.pavlenko@gmail.com")}>
               <div>
-                <EmailIcon size={17} />
+                <MdAlternateEmail size={17} />
                 Email
+              </div>
+            </Command.Item>
+          </Command.Group>
+
+          <Command.Group heading="Preferences">
+            <Command.Item
+              onSelect={() => {
+                toggleDarkMode();
+                setOpen(false);
+              }}
+            >
+              <div className="flex items-center gap-2">
+                {isDark ? <IoIosSunny size={16} /> : <FaMoon size={16} />}
+                {isDark ? "Light mode" : "Dark mode"}
               </div>
             </Command.Item>
           </Command.Group>
@@ -128,32 +157,50 @@ export default function Navigation() {
           >
             {!isHome ? (
               <div
-                className="absolute left-0 rounded-full"
+                className="absolute left-0"
                 onMouseEnter={() => setTooltip(TooltipState.HOME)}
                 onMouseLeave={() => setTooltip(undefined)}
               >
                 <Tooltip open={tooltip === TooltipState.HOME}>Home</Tooltip>
-                <Link href="/" className="island">
+                <GlassElement
+                  width={48}
+                  height={48}
+                  radius={24}
+                  depth={8}
+                  blur={2}
+                  strength={100}
+                  chromaticAberration={0}
+                  className="inline-flex items-center justify-center hover:scale-110 active:scale-90 transition-all will-change-transform"
+                >
+                  <Link href="/" className="flex items-center justify-center w-full h-full">
                   <span className="sr-only">Go home</span>
                   <HomeIcon size={20} />
                 </Link>
+                </GlassElement>
               </div>
             ) : null}
             <div
-              className={`duration-250 absolute rounded-full transition-all ease-out-expo ${
+              className={`duration-250 absolute transition-all ease-out-expo ${
                 !isHome ? "delay-50 left-14" : "left-0 delay-300"
               }`}
               onMouseEnter={() => setTooltip(TooltipState.MENU)}
               onMouseLeave={() => setTooltip(undefined)}
             >
               <Tooltip open={tooltip === TooltipState.MENU}>Menu</Tooltip>
-              <button
-                className="island"
+              <GlassElement
+                width={48}
+                height={48}
+                radius={24}
+                depth={8}
+                blur={2}
+                strength={100}
+                chromaticAberration={0}
+                className="inline-flex items-center justify-center hover:scale-110 active:scale-90 transition-all will-change-transform"
                 onClick={() => setOpen((open) => !open)}
               >
                 <span className="sr-only">Open menu</span>
                 <NavigationIcon size={20} />
-              </button>
+              </GlassElement>
             </div>
           </CSSTransitionGroup>
         </div>

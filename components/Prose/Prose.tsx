@@ -52,7 +52,7 @@ const Pre = ({ children, ...props }) => {
 
   return (
     <div className="code-block-wrapper group relative">
-      <pre {...props} className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg p-4 overflow-x-auto text-sm font-mono relative">
+      <pre {...props} className="bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-800 rounded-lg p-4 overflow-x-auto text-sm font-mono relative">
         {children}
         <CopyButton text={codeText} />
       </pre>

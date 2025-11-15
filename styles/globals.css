@@ -2,8 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Prism.js syntax highlighting styles - Light theme */
-@import 'prismjs/themes/prism.css';
+/* Remove syntax highlighting - plain text only */
+code[class*="language-"],
+pre[class*="language-"],
+code,
+pre {
+  color: inherit !important;
+}
+
+.dark code[class*="language-"],
+.dark pre[class*="language-"],
+.dark code,
+.dark pre {
+  color: #f8f8f2 !important;
+}
+
+/* Remove all token colors */
+.token {
+  color: inherit !important;
+  background: transparent !important;
+}
+
+.dark .token {
+  color: #f8f8f2 !important;
+  background: transparent !important;
+}
 
 /* Custom code block styling */
 .rehype-code-title {
@@ -19,8 +42,8 @@
 }
 
 .code-block-wrapper pre {
-  @apply bg-white dark:bg-gray-900;
-  @apply border border-gray-200 dark:border-gray-700;
+  @apply bg-white dark:bg-neutral-900;
+  @apply border border-gray-200 dark:border-neutral-800;
   @apply rounded-lg;
   @apply p-4;
   @apply overflow-x-auto;
@@ -41,12 +64,18 @@
   @apply transition-opacity duration-200;
 }
 
-html,
+html {
+  @apply bg-white dark:bg-neutral-950;
+  height: 100%;
+}
+
 body {
   @apply bg-white dark:bg-neutral-950;
   @apply text-neutral-800 dark:text-silver;
   @apply antialiased;
   @apply text-base;
+  height: 100%;
+  min-height: 100vh;
 
   @apply selection:bg-indigo-500 selection:text-white dark:selection:bg-indigo-900;
   text-rendering: optimizeLegibility;
@@ -56,6 +85,32 @@ body {
     "cv05" on,
     "cv10" on;
   font-variation-settings: "opsz" 15;
+}
+
+#__next {
+  @apply bg-white dark:bg-neutral-950;
+  min-height: 100vh;
+}
+
+main {
+  @apply bg-white dark:bg-neutral-950;
+  min-height: 100vh;
+}
+
+article {
+  @apply bg-white dark:bg-neutral-950;
+}
+
+/* Ensure dark mode background covers entire viewport */
+.dark {
+  background-color: #010101;
+}
+
+.dark body,
+.dark #__next,
+.dark main,
+.dark article {
+  background-color: #010101 !important;
 }
 
 p {
@@ -87,7 +142,7 @@ blockquote span::after {
 }
 
 [cmdk-overlay] {
-  @apply bg-neutral-950/40;
+  @apply bg-neutral-950/20;
   @apply dark:bg-black/40;
   @apply fixed left-0 top-0;
   @apply h-full w-full;
@@ -105,15 +160,12 @@ blockquote span::after {
 }
 
 [cmdk-root] {
-  @apply material-glass;
-  @apply bg-white/90;
-  @apply dark:bg-neutral-800/95;
   @apply relative;
-  @apply border-transparent;
-  @apply dark:border-neutral-800;
-  @apply border;
-  @apply rounded-xl;
+  @apply rounded-2xl;
   @apply w-full;
+  @apply bg-white dark:bg-neutral-800;
+  @apply border border-white/30 dark:border-white/15;
+  @apply shadow-fancy dark:shadow-fancyDark;
 }
 
 [cmdk-input] {
@@ -401,10 +453,11 @@ blockquote span::after {
     @apply prose prose-neutral dark:prose-invert max-w-4xl;
     @apply prose-p:text-neutral-800 dark:prose-p:text-silver;
     @apply prose-headings:font-normal prose-headings:[font-variation-settings:'wght'_500];
+    @apply prose-h1:mt-9 prose-h1:mb-4;
     @apply prose-strong:font-normal prose-strong:[font-variation-settings:'wght'_500];
     @apply prose-em:italic;
     @apply prose-code:rounded-lg prose-code:bg-gray-100 dark:prose-code:bg-neutral-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:font-mono prose-code:text-sm prose-code:text-neutral-800 dark:prose-code:text-silver prose-code:before:content-none prose-code:after:content-none;
-    @apply prose-pre:overflow-auto prose-pre:whitespace-pre prose-pre:border prose-pre:border-neutral-200 prose-pre:bg-transparent prose-pre:p-4 prose-pre:text-sm dark:prose-pre:border-neutral-900;
+    @apply prose-pre:overflow-auto prose-pre:whitespace-pre prose-pre:border prose-pre:border-neutral-200 prose-pre:bg-white dark:prose-pre:bg-neutral-900 prose-pre:p-4 prose-pre:text-sm dark:prose-pre:border-neutral-800;
     @apply prose-img:rounded-lg;
     @apply prose-hr:my-6 prose-hr:h-[2px] prose-hr:border-none prose-hr:bg-neutral-200 dark:prose-hr:bg-neutral-900 sm:prose-hr:my-10;
     @apply prose-blockquote:border-0 prose-blockquote:p-0 prose-blockquote:not-italic prose-blockquote:text-neutral-600 dark:prose-blockquote:text-silver-dark;

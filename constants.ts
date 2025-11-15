@@ -10,7 +10,7 @@ export const posts: any[] = [];
 
 export const siteSettings = {
   siteTitle: "Vladyslav Pavlenko",
-  siteDescription: "This is Vlaydlsav Pavlenko's Blog Website",
+  siteDescription: "Vladyslav Pavlenko’s Blog on Engineering, Technology, and More",
   siteUrl: "https://vpavlenko.com",
   avatarUrl: null // Using local pic.png instead of LinkedIn (blocked with 403)
 };

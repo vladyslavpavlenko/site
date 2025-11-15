@@ -1,16 +1,12 @@
 // components/Home/Library.tsx
 
+import Link from "next/link";
 import MediaCard, { MediaCardImageRadius } from "../MediaCard/MediaCard";
+import { books } from "../../lib/books";
 
 export default function Library() {
-  const books = [
-    {
-      title: "Fundamentals of Software Architecture",
-      author: "Mark Richards, Neal Ford",
-      coverUrl: "https://www.oreilly.com/covers/urn:orm:book:9781492043447/400w/",
-      url: "https://www.oreilly.com/library/view/fundamentals-of-software/9781492043447/"
-    },
-  ];
+  // Show only first 3 books on home page
+  const displayedBooks = books.slice(0, 3);
 
   return (
     <dl className="list-container">
@@ -19,7 +15,7 @@ export default function Library() {
       </dt>
 
       <dd className="list-content grid gap-4 sm:gap-6">
-        {books.map((book, index) => (
+        {displayedBooks.map((book, index) => (
           <div key={index} className="w-full">
             <MediaCard
               title={book.title}
@@ -37,6 +33,11 @@ export default function Library() {
             />
           </div>
         ))}
+        <div className="mt-2">
+          <Link href="/library" className="link link-sm inline-flex items-center">
+            View all
+          </Link>
+        </div>
       </dd>
     </dl>
   );

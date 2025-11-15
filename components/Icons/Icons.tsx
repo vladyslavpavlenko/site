@@ -44,16 +44,6 @@ export function NoteIcon({ size }) {
   );
 }
 
-export function ShareIcon({ size }) {
-  return (
-    <PhosphorIcon
-      label="Share"
-      size={size}
-      path="M229.7 109.7l-48 48a8.3 8.3 0 01-5.7 2.3 8.5 8.5 0 01-3.1-.6 8 8 0 01-4.9-7.4v-40a87.9 87.9 0 00-85.2 66 8.1 8.1 0 01-7.8 6l-2-.3a8 8 0 01-5.7-9.7A103.9 103.9 0 01168 96V56a8 8 0 014.9-7.4 8.4 8.4 0 018.8 1.7l48 48a8.1 8.1 0 010 11.4zM192 208H40V88a8 8 0 00-16 0v120a16 16 0 0016 16h152a8 8 0 000-16z"
-    />
-  );
-}
-
 export function SpinnerIcon({ size }) {
   return (
     <div className="inline-flex animate-spin">
@@ -176,6 +166,16 @@ export function SunIcon({ size }) {
   );
 }
 
+export function MoonIcon({ size }) {
+  return (
+    <PhosphorIcon
+      label="Moon"
+      size={size}
+      path="M224.3,150.3a8.1,8.1,0,0,0-7.8-5.7l-2.1.4A84,84,0,0,1,111,41.6a5.7,5.7,0,0,0,.3-1.8A7.9,7.9,0,0,0,101.9,32a104,104,0,1,0,122.4,122.4A7.9,7.9,0,0,0,224.3,150.3Z"
+    />
+  );
+}
+
 export function CalendarIcon({ size }) {
   return (
     <PhosphorIcon
@@ -192,6 +192,16 @@ export function TagIcon({ size }) {
       label="Tag"
       size={size}
       path="M243.31,136,144,36.69A15.86,15.86,0,0,0,132.69,32H40a8,8,0,0,0-8,8v92.69A15.86,15.86,0,0,0,36.69,144L136,243.31a16,16,0,0,0,22.63,0l84.68-84.68a16,16,0,0,0,0-22.63ZM84,96A12,12,0,1,1,96,84,12,12,0,0,1,84,96Z"
+    />
+  );
+}
+
+export function BookIcon({ size }) {
+  return (
+    <PhosphorIcon
+      label="Book"
+      size={size}
+      path="M208,24H72A32,32,0,0,0,40,56V224a8,8,0,0,0,8,8H192a8,8,0,0,0,0-16H56a16,16,0,0,1,16-16H208a8,8,0,0,0,8-8V32A8,8,0,0,0,208,24ZM192,192H72a32.06,32.06,0,0,0-16,4.3V56A16,16,0,0,1,72,40H192Z"
     />
   );
 }

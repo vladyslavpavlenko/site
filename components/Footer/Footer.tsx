@@ -18,6 +18,11 @@ export default function Footer() {
                   Posts
                 </Link>
               </li>
+              <li>
+                <Link href="/library" className="link-fade">
+                  Library
+                </Link>
+              </li>
             </ul>
           </div>
           <div className="flex items-center gap-1.5 text-sm text-neutral-500 [font-variation-settings:'opsz'_12] dark:text-silver-dark">

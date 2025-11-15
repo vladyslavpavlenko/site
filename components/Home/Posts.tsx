@@ -14,16 +14,16 @@ export default function Posts({ posts }) {
             <div>
               <Link
                 href={`/posts/${post.slug}`}
-                className="link inline-flex items-center gap-1"
+                className="link inline-flex items-start gap-1"
               >
-                <div className="opacity-20 dark:opacity-30">
+                <div className="opacity-20 dark:opacity-30 mt-0.5">
                   <NoteIcon size={16} />
                 </div>
                 {post.title}
               </Link>
             </div>
             <time className="time" dateTime={post.date}>
-                {post.tags.join(", ")} &middot;  {formatDate(post.date, true)}
+                {formatDate(post.date, true)} &middot; {post.tags.join(", ")}
             </time>
           </div>
         ))}

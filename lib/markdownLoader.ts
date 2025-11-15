@@ -7,10 +7,13 @@ export interface PostMetadata {
   slug: string;
   publishedDate: string;
   coverUrl?: string | null;
+  coverLight?: string | null;
+  coverDark?: string | null;
   coverAlt?: string | null;
   metaDescription: string;
   tags: string[];
   draft?: boolean;
+  readingTime?: number; // in minutes
 }
 
 export interface Post extends PostMetadata {
@@ -26,6 +29,14 @@ function generateSlugFromFilename(filename: string): string {
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/(^-|-$)/g, '');
+}
+
+// Calculate reading time from content (words per minute)
+export function calculateReadingTime(content: string): number {
+  const wordsPerMinute = 200; // Average reading speed
+  const words = content.trim().split(/\s+/).filter(word => word.length > 0).length;
+  const minutes = Math.ceil(words / wordsPerMinute);
+  return Math.max(1, minutes); // At least 1 minute
 }
 
 // Validate required frontmatter fields
@@ -97,11 +108,14 @@ export function getPostBySlug(slug: string): Post | null {
       slug: postSlug,
       publishedDate: data.publishedDate,
       coverUrl: data.coverUrl || null,
+      coverLight: data.coverLight || null,
+      coverDark: data.coverDark || null,
       coverAlt: data.coverAlt || null,
       metaDescription: data.metaDescription,
       tags: Array.isArray(data.tags) ? data.tags : [],
       draft: Boolean(data.draft),
       body: content,
+      readingTime: calculateReadingTime(content),
     };
   } catch (error) {
     console.error(`Error reading post ${slug}:`, error);
@@ -128,7 +142,10 @@ export function getAllPosts(includeDrafts: boolean = false): Post[] {
 }
 
 export function getPostMetadata(includeDrafts: boolean = false): PostMetadata[] {
-  return getAllPosts(includeDrafts).map(({ body, ...metadata }) => metadata);
+  return getAllPosts(includeDrafts).map(({ body, ...metadata }) => ({
+    ...metadata,
+    readingTime: calculateReadingTime(body),
+  }));
 }
 
 // Get posts by tag
