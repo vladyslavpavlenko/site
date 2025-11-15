@@ -2,7 +2,7 @@
 import { Feed as RSSFeed } from "feed";
 import { baseUrl } from "../components/SEO/SEO";
 
-export default function (posts, siteSettings) {
+export default function generateFeeds(posts, siteSettings) {
   const date = new Date();
   const updated = posts.length > 0 && posts[0]?.publishedDate 
     ? new Date(posts[0].publishedDate)
