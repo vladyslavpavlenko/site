@@ -27,6 +27,7 @@ export default function Post(props) {
   const avatarPath = `${basePath}/pic.png`;
   const [readingProgress, setReadingProgress] = useState(0);
   const [showScrollUp, setShowScrollUp] = useState(false);
+  const { isDark, mounted } = useDarkMode();
 
   const post = props.post;
 
@@ -81,15 +82,14 @@ export default function Post(props) {
   }
 
   const { title, metaDescription, publishedDate, coverUrl, coverLight, coverDark, coverAlt } = post;
-  const { isDark, mounted } = useDarkMode();
   
   // Determine which cover to use: prefer coverLight/coverDark, fallback to coverUrl
   // Use coverLight as default until mounted to avoid hydration mismatch
-  const currentCover = mounted
+  const currentCover = post ? (mounted
     ? (isDark 
         ? (coverDark || coverLight || coverUrl)
         : (coverLight || coverDark || coverUrl))
-    : (coverLight || coverDark || coverUrl);
+    : (coverLight || coverDark || coverUrl)) : null;
   const relativeUrl = `/posts/${slug}`;
   const url = `${baseUrl}${relativeUrl}`;
 
