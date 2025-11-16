@@ -1,4 +1,5 @@
 import "../styles/globals.css";
+import "prismjs/themes/prism-tomorrow.css";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
 import localFont from "next/font/local";

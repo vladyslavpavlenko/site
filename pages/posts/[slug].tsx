@@ -24,7 +24,6 @@ export default function Post(props) {
   const slug = router.query.slug as string;
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
   const avatarPath = `${basePath}/pic.png`;
-  const [readingProgress, setReadingProgress] = useState(0);
   const [showScrollUp, setShowScrollUp] = useState(false);
   const { isDark, mounted } = useDarkMode();
 
@@ -33,25 +32,20 @@ export default function Post(props) {
   useEffect(() => {
     let rafId: number | null = null;
     
-    const updateReadingProgress = () => {
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.documentElement.scrollHeight;
+    const updateScrollState = () => {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const scrollableHeight = documentHeight - windowHeight;
-      const progress = scrollableHeight > 0 ? (scrollTop / scrollableHeight) * 100 : 0;
-      setReadingProgress(Math.min(100, Math.max(0, progress)));
       setShowScrollUp(scrollTop > 300); // Show button after scrolling 300px
       rafId = null;
     };
 
     const handleScroll = () => {
       if (rafId === null) {
-        rafId = requestAnimationFrame(updateReadingProgress);
+        rafId = requestAnimationFrame(updateScrollState);
       }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    updateReadingProgress(); // Initial calculation
+    updateScrollState(); // Initial calculation
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -112,15 +106,6 @@ export default function Post(props) {
           }`,
         }}
       />
-      <div className="fixed top-0 left-0 right-0 h-1 z-50">
-        <div
-          className="h-full"
-          style={{
-            width: `${readingProgress}%`,
-            background: 'linear-gradient(to right, #6366f1, #8b5cf6, #ec4899)',
-          }}
-        />
-      </div>
       <Main>
         <header className="mb-6 rounded-lg sm:mb-6">
           {post.draft && (

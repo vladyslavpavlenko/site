@@ -135,7 +135,7 @@ export default function Navigation() {
             >
               <div className="flex items-center gap-2">
                 {isDark ? <IoIosSunny size={16} /> : <FaMoon size={16} />}
-                {isDark ? "Light mode" : "Dark mode"}
+                {isDark ? "Light" : "Dark"}
               </div>
             </Command.Item>
           </Command.Group>

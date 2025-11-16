@@ -42,17 +42,23 @@ const Pre = ({ children, ...props }) => {
         return children.props.children;
       }
       if (Array.isArray(children.props.children)) {
-        return children.props.children.join('');
+        return children.props.children.map(child => 
+          typeof child === 'string' ? child : child?.props?.children || ''
+        ).join('');
       }
     }
     return '';
   };
 
   const codeText = getCodeText(children);
+  
+  // Preserve original pre classes from Prism and merge with our custom classes
+  const originalClassName = props.className || '';
+  const preClasses = `code-block-wrapper-pre ${originalClassName}`.trim();
 
   return (
-    <div className="code-block-wrapper group relative">
-      <pre {...props} className="bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-800 rounded-lg p-4 overflow-x-auto text-sm font-mono relative">
+    <div className="code-block-wrapper group relative my-6">
+      <pre {...props} className={preClasses}>
         {children}
         <CopyButton text={codeText} />
       </pre>

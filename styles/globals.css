@@ -2,31 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Remove syntax highlighting - plain text only */
-code[class*="language-"],
-pre[class*="language-"],
-code,
-pre {
-  color: inherit !important;
-}
-
-.dark code[class*="language-"],
-.dark pre[class*="language-"],
-.dark code,
-.dark pre {
-  color: #f8f8f2 !important;
-}
-
-/* Remove all token colors */
-.token {
-  color: inherit !important;
-  background: transparent !important;
-}
-
-.dark .token {
-  color: #f8f8f2 !important;
-  background: transparent !important;
-}
+/* Prism syntax highlighting styles */
+/* prism-tomorrow.css is imported in _app.tsx and provides the base theme */
 
 /* Custom code block styling */
 .rehype-code-title {
@@ -41,9 +18,8 @@ pre {
   @apply w-full;
 }
 
-.code-block-wrapper pre {
-  @apply bg-white dark:bg-neutral-900;
-  @apply border border-gray-200 dark:border-neutral-800;
+/* Base styling for code blocks - let Prism theme handle colors */
+.code-block-wrapper-pre {
   @apply rounded-lg;
   @apply p-4;
   @apply overflow-x-auto;
@@ -52,11 +28,24 @@ pre {
   @apply relative;
   @apply w-full;
   @apply max-w-none;
+  @apply m-0;
+  /* Remove border to eliminate strange contour */
+  @apply border-0;
+  /* Subtle shadow instead of border */
+  @apply shadow-sm dark:shadow-none;
 }
 
-.code-block-wrapper pre:has(+ .rehype-code-title) {
+/* Ensure code element inherits proper styling */
+.code-block-wrapper-pre code {
+  @apply font-mono;
+  @apply text-inherit;
+}
+
+/* Let Prism theme handle backgrounds - don't override */
+/* Prism tomorrow theme will apply its own background colors */
+
+.code-block-wrapper-pre:has(+ .rehype-code-title) {
   @apply rounded-t-none;
-  @apply border-t-0;
 }
 
 .copy-button {
@@ -458,7 +447,9 @@ blockquote span::after {
     @apply prose-strong:font-normal prose-strong:[font-variation-settings:'wght'_500];
     @apply prose-em:italic;
     @apply prose-code:rounded-lg prose-code:bg-gray-100 dark:prose-code:bg-neutral-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:font-mono prose-code:text-sm prose-code:text-neutral-800 dark:prose-code:text-silver prose-code:before:content-none prose-code:after:content-none;
-    @apply prose-pre:overflow-auto prose-pre:whitespace-pre prose-pre:border prose-pre:border-neutral-200 prose-pre:bg-white dark:prose-pre:bg-neutral-900 prose-pre:p-4 prose-pre:text-sm dark:prose-pre:border-neutral-800;
+    /* Don't apply border/background to code blocks - let Prism theme handle it */
+    /* Only apply essential prose styles, let our custom component handle the rest */
+    @apply prose-pre:overflow-auto prose-pre:whitespace-pre prose-pre:text-sm;
     @apply prose-img:rounded-lg;
     @apply prose-hr:my-6 prose-hr:h-[2px] prose-hr:border-none prose-hr:bg-neutral-200 dark:prose-hr:bg-neutral-900 sm:prose-hr:my-10;
     @apply prose-blockquote:border-0 prose-blockquote:p-0 prose-blockquote:not-italic prose-blockquote:text-neutral-600 dark:prose-blockquote:text-silver-dark;
