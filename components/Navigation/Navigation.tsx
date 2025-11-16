@@ -15,7 +15,6 @@ import {
 import { useDarkMode } from "../../lib/useDarkMode";
 import { CSSTransitionGroup } from "react-transition-group";
 import { Tooltip } from "../Tooltip/Tooltip";
-import { GlassElement } from "../GlassElement/GlassElement";
 
 enum TooltipState {
   HOME,
@@ -72,7 +71,7 @@ export default function Navigation() {
   return (
     <>
       <Command.Dialog open={open} onOpenChange={setOpen}>
-        <Command.Input placeholder="Go to..." />
+        <Command.Input placeholder="Spotlight..." />
 
         <Command.List>
           {loading && (
@@ -157,50 +156,32 @@ export default function Navigation() {
           >
             {!isHome ? (
               <div
-                className="absolute left-0"
+                className="absolute left-0 rounded-full"
                 onMouseEnter={() => setTooltip(TooltipState.HOME)}
                 onMouseLeave={() => setTooltip(undefined)}
               >
                 <Tooltip open={tooltip === TooltipState.HOME}>Home</Tooltip>
-                <GlassElement
-                  width={48}
-                  height={48}
-                  radius={24}
-                  depth={8}
-                  blur={2}
-                  strength={100}
-                  chromaticAberration={0}
-                  className="inline-flex items-center justify-center hover:scale-110 active:scale-90 transition-all will-change-transform"
-                >
-                  <Link href="/" className="flex items-center justify-center w-full h-full">
+                <Link href="/" className="island">
                   <span className="sr-only">Go home</span>
                   <HomeIcon size={20} />
                 </Link>
-                </GlassElement>
               </div>
             ) : null}
             <div
-              className={`duration-250 absolute transition-all ease-out-expo ${
+              className={`duration-250 absolute rounded-full transition-all ease-out-expo ${
                 !isHome ? "delay-50 left-14" : "left-0 delay-300"
               }`}
               onMouseEnter={() => setTooltip(TooltipState.MENU)}
               onMouseLeave={() => setTooltip(undefined)}
             >
               <Tooltip open={tooltip === TooltipState.MENU}>Menu</Tooltip>
-              <GlassElement
-                width={48}
-                height={48}
-                radius={24}
-                depth={8}
-                blur={2}
-                strength={100}
-                chromaticAberration={0}
-                className="inline-flex items-center justify-center hover:scale-110 active:scale-90 transition-all will-change-transform"
+              <button
+                className="island"
                 onClick={() => setOpen((open) => !open)}
               >
                 <span className="sr-only">Open menu</span>
                 <NavigationIcon size={20} />
-              </GlassElement>
+              </button>
             </div>
           </CSSTransitionGroup>
         </div>

@@ -17,7 +17,6 @@ import formatDate from "../../lib/formatDate";
 import contentfulLoader from "../../lib/contentfulLoader";
 import { getPostBySlug, getPostSlugs } from "../../lib/markdownLoader";
 import { siteSettings } from "../../constants";
-import { GlassElement } from "../../components/GlassElement/GlassElement";
 import { useDarkMode } from "../../lib/useDarkMode";
 
 export default function Post(props) {
@@ -200,21 +199,16 @@ export default function Post(props) {
           {showScrollUp && (
             <div
               key="scroll-up"
+              className="rounded-full"
             >
-              <GlassElement
-                width={48}
-                height={48}
-                radius={24}
-                depth={8}
-                blur={2}
-                strength={100}
-                chromaticAberration={0}
-                className="inline-flex items-center justify-center hover:scale-110 active:scale-90 transition-all will-change-transform"
+              <button
                 onClick={scrollToTop}
+                className="island"
+                aria-label="Scroll to top"
               >
                 <span className="sr-only">Scroll to top</span>
                 <PiPaperPlaneFill size={20} />
-              </GlassElement>
+              </button>
             </div>
           )}
         </CSSTransitionGroup>
