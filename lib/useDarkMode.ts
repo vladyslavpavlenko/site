@@ -32,6 +32,18 @@ export function useDarkMode() {
     }
   };
 
-  return { isDark, toggleDarkMode, mounted };
+  const useSystemTheme = () => {
+    localStorage.removeItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    setIsDark(prefersDark);
+    
+    if (prefersDark) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  };
+
+  return { isDark, toggleDarkMode, useSystemTheme, mounted };
 }
 

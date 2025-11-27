@@ -34,36 +34,7 @@ const CopyButton = ({ text }) => {
 };
 
 const Pre = ({ children, ...props }) => {
-  // Extract the code text from children
-  const getCodeText = (children) => {
-    if (typeof children === 'string') return children;
-    if (children?.props?.children) {
-      if (typeof children.props.children === 'string') {
-        return children.props.children;
-      }
-      if (Array.isArray(children.props.children)) {
-        return children.props.children.map(child => 
-          typeof child === 'string' ? child : child?.props?.children || ''
-        ).join('');
-      }
-    }
-    return '';
-  };
-
-  const codeText = getCodeText(children);
-  
-  // Preserve original pre classes from Prism and merge with our custom classes
-  const originalClassName = props.className || '';
-  const preClasses = `code-block-wrapper-pre ${originalClassName}`.trim();
-
-  return (
-    <div className="code-block-wrapper group relative my-6">
-      <pre {...props} className={preClasses}>
-        {children}
-        <CopyButton text={codeText} />
-      </pre>
-    </div>
-  );
+  return <pre {...props}>{children}</pre>;
 };
 
 export const mdxComponents = {

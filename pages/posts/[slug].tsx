@@ -4,8 +4,6 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { MDXRemote } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
-import rehypePrism from "@mapbox/rehype-prism";
-import rehypeCodeTitles from "rehype-code-titles";
 import { PiPaperPlaneFill } from "react-icons/pi";
 import { CSSTransitionGroup } from "react-transition-group";
 import { Main } from "../../components/Layouts/Layouts";
@@ -76,13 +74,13 @@ export default function Post(props) {
 
   const { title, metaDescription, publishedDate, coverUrl, coverLight, coverDark, coverAlt } = post;
   
-  // Determine which cover to use: prefer coverLight/coverDark, fallback to coverUrl
-  // Use coverLight as default until mounted to avoid hydration mismatch
-  const currentCover = post ? (mounted
+  // Compute current cover based on theme
+  const currentCover = mounted
     ? (isDark 
         ? (coverDark || coverLight || coverUrl)
         : (coverLight || coverDark || coverUrl))
-    : (coverLight || coverDark || coverUrl)) : null;
+    : (coverLight || coverDark || coverUrl);
+  
   const relativeUrl = `/posts/${slug}`;
   const url = `${baseUrl}${relativeUrl}`;
 
@@ -123,6 +121,7 @@ export default function Post(props) {
           {currentCover ? (
             <div className="mt-4 sm:mt-4 mb-6 sm:mb-6 -mx-4 sm:-mx-8 overflow-hidden rounded-lg h-full">
               <Image
+                key={currentCover}
                 height={400}
                 width={700}
                 alt={coverAlt || `Cover image for post: ${title}`}
@@ -231,11 +230,22 @@ export async function getStaticProps({ params }) {
   }
 
   const remarkTypograf = require("@mavrin/remark-typograf");
+  const rehypePrettyCode = await import("rehype-pretty-code").then((mod) => mod.default || mod);
 
   const body = await serialize(post.body, {
     mdxOptions: {
       remarkPlugins: [[remarkTypograf, { locale: ["en-US"] }]],
-      rehypePlugins: [rehypeCodeTitles, rehypePrism],
+      rehypePlugins: [
+        [
+          rehypePrettyCode,
+          {
+            theme: {
+              dark: "github-dark",
+              light: "github-light",
+            },
+          },
+        ],
+      ],
     },
   });
 

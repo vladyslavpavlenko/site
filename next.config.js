@@ -5,6 +5,7 @@ const nextConfig = {
   swcMinify: true,
   basePath: process.env.NEXT_PUBLIC_BASE_PATH || '',
   assetPrefix: process.env.NEXT_PUBLIC_ASSET_PREFIX || '',
+  transpilePackages: ['rehype-pretty-code', 'shiki'],
   images: {
     unoptimized: true,
     formats: ["image/avif", "image/webp"],

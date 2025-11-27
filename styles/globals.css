@@ -2,55 +2,152 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Prism syntax highlighting styles */
-/* prism-tomorrow.css is imported in _app.tsx and provides the base theme */
-
-/* Custom code block styling */
-.rehype-code-title {
-  @apply bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200;
-  @apply px-4 py-2 text-sm font-medium;
-  @apply rounded-t-lg border-b border-gray-300 dark:border-gray-600;
-  @apply font-mono;
+/* rehype-pretty-code styles */
+pre {
+  overflow-x: auto;
+  padding: 1rem 0;
+  border-radius: 0.5rem;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  margin: 1.5rem 0;
+  border: 1px solid;
 }
 
-.code-block-wrapper {
-  @apply relative;
-  @apply w-full;
+pre > code {
+  display: grid;
 }
 
-/* Base styling for code blocks - let Prism theme handle colors */
-.code-block-wrapper-pre {
-  @apply rounded-lg;
-  @apply p-4;
-  @apply overflow-x-auto;
-  @apply text-sm;
-  @apply font-mono;
-  @apply relative;
-  @apply w-full;
-  @apply max-w-none;
-  @apply m-0;
-  /* Remove border to eliminate strange contour */
-  @apply border-0;
-  /* Subtle shadow instead of border */
-  @apply shadow-sm dark:shadow-none;
+pre [data-line] {
+  padding: 0 1rem;
 }
 
-/* Ensure code element inherits proper styling */
-.code-block-wrapper-pre code {
-  @apply font-mono;
-  @apply text-inherit;
+/* Shiki theme variables - light mode */
+html:not(.dark) pre code span {
+  color: var(--shiki-light) !important;
 }
 
-/* Let Prism theme handle backgrounds - don't override */
-/* Prism tomorrow theme will apply its own background colors */
-
-.code-block-wrapper-pre:has(+ .rehype-code-title) {
-  @apply rounded-t-none;
+html:not(.dark) pre {
+  background-color: #ffffff !important;
+  color: #24292e !important;
+  border-color: #d0d7de !important;
 }
 
-.copy-button {
-  @apply opacity-0 group-hover:opacity-100;
-  @apply transition-opacity duration-200;
+html.dark pre code span {
+  color: var(--shiki-dark) !important;
+}
+
+html.dark pre {
+  background-color: #161b22 !important;
+  color: #e1e4e8 !important;
+  border-color: #30363d !important;
+}
+
+/* Line numbers */
+code[data-line-numbers] {
+  counter-reset: line;
+}
+
+code[data-line-numbers] > [data-line]::before {
+  counter-increment: line;
+  content: counter(line);
+  display: inline-block;
+  width: 1rem;
+  margin-right: 1.5rem;
+  margin-left: -1.5rem;
+  text-align: right;
+  color: gray;
+}
+
+code[data-line-numbers-max-digits="2"] > [data-line]::before {
+  width: 2rem;
+}
+
+code[data-line-numbers-max-digits="3"] > [data-line]::before {
+  width: 3rem;
+}
+
+/* Code block titles */
+figure[data-rehype-pretty-code-figure] {
+  @apply my-6;
+  margin-left: -1rem;
+  margin-right: -1rem;
+  width: calc(100% + 2rem);
+  max-width: calc(100% + 2rem);
+}
+
+@media (min-width: 640px) {
+  figure[data-rehype-pretty-code-figure] {
+    margin-left: -2rem;
+    margin-right: -2rem;
+    width: calc(100% + 4rem);
+    max-width: calc(100% + 4rem);
+  }
+}
+
+/* Standalone code blocks without figure wrapper */
+.prose-custom > pre {
+  margin-left: -1rem;
+  margin-right: -1rem;
+  width: calc(100% + 2rem);
+  max-width: calc(100% + 2rem);
+}
+
+@media (min-width: 640px) {
+  .prose-custom > pre {
+    margin-left: -2rem;
+    margin-right: -2rem;
+    width: calc(100% + 4rem);
+    max-width: calc(100% + 4rem);
+  }
+}
+
+div[data-rehype-pretty-code-title],
+figcaption[data-rehype-pretty-code-title] {
+  @apply rounded-t-lg px-4 py-2 text-sm font-medium font-mono;
+  @apply border border-b-0;
+}
+
+/* Light mode title */
+html:not(.dark) div[data-rehype-pretty-code-title],
+html:not(.dark) figcaption[data-rehype-pretty-code-title] {
+  background-color: #f6f8fa;
+  color: #24292e;
+  border-color: #d0d7de;
+}
+
+/* Dark mode title */
+html.dark div[data-rehype-pretty-code-title],
+html.dark figcaption[data-rehype-pretty-code-title] {
+  background-color: #0d1117;
+  color: #e1e4e8;
+  border-color: #30363d;
+}
+
+div[data-rehype-pretty-code-title] + pre,
+figcaption[data-rehype-pretty-code-title] + pre {
+  @apply mt-0 rounded-t-none;
+  @apply border-t-0;
+}
+
+/* Inline code */
+:not(pre) > code {
+  @apply rounded-md font-mono;
+  @apply px-1.5 py-0.5;
+  font-size: 0.875em;
+  font-weight: 400 !important;
+  border: 1px solid;
+}
+
+html:not(.dark) :not(pre) > code {
+  background-color: #f6f8fa;
+  color: #24292f;
+  border-color: #d0d7de;
+}
+
+html.dark :not(pre) > code {
+  background-color: #161b22;
+  color: #e6edf3;
+  border-color: #30363d;
 }
 
 html {
@@ -446,13 +543,28 @@ blockquote span::after {
     @apply prose-h1:mt-9 prose-h1:mb-4;
     @apply prose-strong:font-normal prose-strong:[font-variation-settings:'wght'_500];
     @apply prose-em:italic;
-    @apply prose-code:rounded-lg prose-code:bg-gray-100 dark:prose-code:bg-neutral-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:font-mono prose-code:text-sm prose-code:text-neutral-800 dark:prose-code:text-silver prose-code:before:content-none prose-code:after:content-none;
-    /* Don't apply border/background to code blocks - let Prism theme handle it */
-    /* Only apply essential prose styles, let our custom component handle the rest */
-    @apply prose-pre:overflow-auto prose-pre:whitespace-pre prose-pre:text-sm;
+    @apply prose-code:before:content-none prose-code:after:content-none;
+    @apply prose-code:font-normal;
     @apply prose-img:rounded-lg;
     @apply prose-hr:my-6 prose-hr:h-[2px] prose-hr:border-none prose-hr:bg-neutral-200 dark:prose-hr:bg-neutral-900 sm:prose-hr:my-10;
     @apply prose-blockquote:border-0 prose-blockquote:p-0 prose-blockquote:not-italic prose-blockquote:text-neutral-600 dark:prose-blockquote:text-silver-dark;
+  }
+
+  /* Make images wider than text content, similar to cover */
+  .prose-custom img {
+    margin-left: -1rem;
+    margin-right: -1rem;
+    width: calc(100% + 2rem);
+    max-width: calc(100% + 2rem);
+  }
+
+  @media (min-width: 640px) {
+    .prose-custom img {
+      margin-left: -2rem;
+      margin-right: -2rem;
+      width: calc(100% + 4rem);
+      max-width: calc(100% + 4rem);
+    }
   }
 }
 

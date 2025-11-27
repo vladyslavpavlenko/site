@@ -1,5 +1,4 @@
 import "../styles/globals.css";
-import "prismjs/themes/prism-tomorrow.css";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
 import localFont from "next/font/local";
@@ -19,7 +18,6 @@ export default function MyApp({
   Component,
   pageProps,
 }) {
-
   return (
     <>
         <style jsx global>
