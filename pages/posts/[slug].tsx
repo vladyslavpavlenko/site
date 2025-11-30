@@ -230,14 +230,14 @@ export async function getStaticProps({ params }) {
   }
 
   const remarkTypograf = require("@mavrin/remark-typograf");
-  const rehypePrettyCode = await import("rehype-pretty-code").then((mod) => mod.default || mod);
+  const { default: rehypePrettyCode } = await import("rehype-pretty-code");
 
   const body = await serialize(post.body, {
     mdxOptions: {
       remarkPlugins: [[remarkTypograf, { locale: ["en-US"] }]],
       rehypePlugins: [
         [
-          rehypePrettyCode,
+          rehypePrettyCode as any,
           {
             theme: {
               dark: "github-dark",
